@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Contains evsy_event.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\evsy_event\Services\EvsyEventDispatcherInterface;
+
+/**
+ * Implements hook_help().
+ */
+function evsy_event_help($route_name, RouteMatchInterface $route_match) {
+    switch ($route_name) {
+        // Main module help for the evsy_event module.
+        case 'help.page.evsy_event':
+            $output = '';
+            $output .= '<h3>' . t('About') . '</h3>';
+            $output .= '<p>' . t('My Awesome Module') . '</p>';
+            return $output;
+
+        default:
+    }
+}
+
+
+/**
+ * @param $entity
+ */
+function _evsy_event_entity_dispatch($event_name, $entity) {
+
+    /** @var $dispatcher EvsyEventDispatcherInterface */
+    $dispatcher = \Drupal::service('evsy.event_dispatcher');
+    $dispatcher->dispatch($event_name, $entity);
+}
+
+/**
+ * Хук entity_[action] не срабатывает, потому что некоторые модули по этому хуку
+ * пересохраняют сущности, и например хук entity_insert превращается в entity_update
+ * 
+ * гадит модуль "web/modules/contrib/auto_entitylabel/auto_entitylabel.module" стр.188
+ * 
+ */
+
+/**
+ * @param $entity
+ */
+function evsy_event_node_insert($entity) {
+    _evsy_event_entity_dispatch('entity_insert', $entity);
+}
+
+function evsy_event_node_delete($entity) {
+    _evsy_event_entity_dispatch('entity_delete', $entity);
+}
+
+function evsy_event_node_update($entity) {
+    _evsy_event_entity_dispatch('entity_update', $entity);
+}
+
+/**
+ * @param $entity
+ */
+function evsy_event_comment_insert($entity) {
+    _evsy_event_entity_dispatch('entity_insert', $entity);
+}
+
+function evsy_event_comment_delete($entity) {
+    _evsy_event_entity_dispatch('entity_delete', $entity);
+}
+
+function evsy_event_comment_update($entity) {
+    _evsy_event_entity_dispatch('entity_update', $entity);
+}
+
+/**
+ * @param $entity
+ */
+function evsy_event_user_insert($entity) {
+    _evsy_event_entity_dispatch('entity_insert', $entity);
+}
+
+function evsy_event_user_delete($entity) {
+    _evsy_event_entity_dispatch('entity_delete', $entity);
+}
+
+function evsy_event_user_update($entity) {
+    _evsy_event_entity_dispatch('entity_update', $entity);
+}

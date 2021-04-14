@@ -1,0 +1,7 @@
+services:
+  plugin.manager.app_event:
+    class: Drupal\evsy_event\Plugin\AppEventManager
+    parent: default_plugin_manager
+  evsy.event_dispatcher:
+    class: Drupal\evsy_event\Services\EvsyEventDispatcher
+    arguments: [ '@plugin.manager.app_event','@event_dispatcher' ]

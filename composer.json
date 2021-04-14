@@ -1,0 +1,13 @@
+{
+    "name": "orion76/evsy_event",
+    "type": "drupal-custom-module",
+    "description": "Event system module",
+    "keywords": [
+    ],
+    "homepage": "https://github.com/orion76/evsy_event",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://github.com/orion76/evsy_event/issues",
+        "source": "https://github.com/orion76/evsy_event"
+    }
+}
